@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { FileText, Trash2, Pencil } from 'lucide-react';
 import { IconButton } from '@modules/core/ui/primitives/icon-button';
 import type { Page } from '@modules/pages/models/page';
+import { pagesPageWithIdRouteValue } from '../../../../boot/routes';
 
 interface PageListItemProps {
     page: Page;
@@ -13,7 +14,7 @@ export function PageListItem({ page, onDelete, onEdit }: PageListItemProps) {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/reader/${page.id}`);
+        navigate(pagesPageWithIdRouteValue(page.id));
     };
 
     const handleEdit = (e: React.MouseEvent) => {

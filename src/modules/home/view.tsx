@@ -9,6 +9,7 @@ import { EditPageDialog } from './components/edit-page-dialog';
 import { PageListItem } from './components/page-list-item';
 import { createPage, editPage, deletePage, queryPages } from '@modules/pages/services/page-service';
 import type { Page } from '@modules/pages/models/page';
+import { pagesPageWithIdRouteValue } from '../../../boot/routes';
 
 export function HomeView() {
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ export function HomeView() {
 
     const handleCreate = async (title: string, content: string) => {
         const page = await createPage({ title, content });
-        navigate(`/reader/${page.id}`);
+        navigate(pagesPageWithIdRouteValue(page.id));
     };
 
     const handleEdit = (page: Page) => {
@@ -57,7 +58,7 @@ export function HomeView() {
             const h1Match = text.match(/^#\s+(.+)$/m);
             const title = h1Match ? h1Match[1].trim() : 'Untitled';
             const page = await createPage({ title, content: text.trim() });
-            navigate(`/reader/${page.id}`);
+            navigate(pagesPageWithIdRouteValue(page.id));
         };
 
         window.addEventListener('paste', handlePaste);
