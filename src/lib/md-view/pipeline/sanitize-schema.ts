@@ -45,7 +45,7 @@ export const mdSanitizeSchema: SanitizeSchema = {
     video: ["src", "controls", "loop", "muted", "preload", "poster", "width", "height", "playsinline"],
     track: ["src", "kind", "srclang", "label", "default"],
     source: [...(base.attributes?.source ?? []), "src", "type", "media", "srcset", "sizes"],
-    iframe: ["src", "width", "height", "title", "loading", "allowfullscreen", "allow", "sandbox"],
+    iframe: ["src", "width", "height", "title", "loading", "allowfullscreen", "allow", "sandbox", "dataHideFrame"],
     math: ["xmlns", "display"],
     annotation: ["encoding"],
     svg: ["xmlns", "width", "height", "viewBox", "preserveAspectRatio", "style", "ariaHidden"],

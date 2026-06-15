@@ -177,3 +177,29 @@ Non-ASCII heading — Unicode title preserved in both title and rawTitle.
 ## Heading — with em-dash and "quotes"
 
 Special characters in headings.
+
+# 9. Links
+
+[External link](https://example.com) — type: `external`
+
+[Anchor link](#1-atx-headings) — type: `anchor`
+
+[Email link](mailto:hello@example.com) — type: `email`
+
+[Relative link](/about) — type: `relative`
+
+[Another relative](./docs/intro) — type: `relative`
+
+# 10. Iframes
+
+## 10.1 Framed iframe (default)
+
+No `data-hide-frame` — renders with the URL label bar above the iframe.
+
+<iframe src="https://www.wikipedia.org" width="100%" height="300" title="Wikipedia"></iframe>
+
+## 10.2 Bare iframe (data-hide-frame)
+
+`data-hide-frame` present — renders the raw iframe with no wrapper.
+
+<iframe src="https://www.wikipedia.org" width="100%" height="300" title="Wikipedia (hidden frame)" data-hide-frame></iframe>

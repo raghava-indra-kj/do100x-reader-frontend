@@ -10,13 +10,14 @@ import {
 import { Callout } from "./callout";
 import { Details, DetailsSummary } from "./details";
 import { Image } from "./image";
+import { IFrame } from "./iframe";
 import { PreUnwrap } from "./pre-unwrap";
 
 export {
   Heading, Paragraph, Blockquote, Divider,
   BulletList, OrderedList, ListItem,
   Table, TableHead, TableBody, TableRow, TableCell, TableHeaderCell,
-  Callout, Details, DetailsSummary, Image, PreUnwrap,
+  Callout, Details, DetailsSummary, Image, IFrame, PreUnwrap,
 };
 
 /** Block tag to component map for react-markdown. */
@@ -42,6 +43,7 @@ export const blockComponents: Components = {
   details: Details,
   summary: DetailsSummary,
   img: Image,
+  iframe: IFrame,
   pre: PreUnwrap,
 };
 
