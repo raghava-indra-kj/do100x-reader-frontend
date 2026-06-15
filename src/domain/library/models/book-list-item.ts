@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
-export const BookSchema = z.object({
+export const BookListItemSchema = z.object({
     id: z.string(),
     title: z.string(),
-    createdAt: z.string(),
+    createdAt: z.date(),
 });
 
-export type Book = z.infer<typeof BookSchema>;
+export type BookListItem = z.infer<typeof BookListItemSchema>;
