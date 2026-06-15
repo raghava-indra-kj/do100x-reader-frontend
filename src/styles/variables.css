@@ -126,6 +126,10 @@
   --color-error: var(--red-500);
   --color-status-error-soft: var(--red-100);
 
+  --focus-ring-color: var(--coral-500);
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+
   --button-primary-bg: var(--color-brand);
   --button-primary-text: var(--color-text-on-brand);
   --button-primary-font: var(--font-sans);
@@ -216,6 +220,9 @@
 }
 
 .dark {
+  --color-brand-soft: var(--navy-600);
+  --color-brand-on-soft: var(--coral-300);
+
   --color-surface: var(--navy-900);
   --color-surface-canvas: var(--navy-950);
   --color-surface-raised: var(--navy-900);
@@ -242,4 +249,6 @@
   --scrollbar-track: var(--navy-800);
   --scrollbar-thumb: var(--navy-500);
   --scrollbar-thumb-hover: var(--navy-400);
+
+  --focus-ring-color: var(--coral-300);
 }

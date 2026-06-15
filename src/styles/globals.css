@@ -17,6 +17,20 @@ body {
     font-family: var(--font-sans);
 }
 
+:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+}
+
+*:where(button, [role="button"], [role="switch"], a, input, textarea, select):focus {
+    outline: none;
+}
+
+*:where(button, [role="button"], [role="switch"], a, input, textarea, select):focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+}
+
 * {
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);

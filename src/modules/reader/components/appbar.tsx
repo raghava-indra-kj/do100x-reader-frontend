@@ -50,7 +50,7 @@ export function AppBar({ title }: { title: string }) {
                 <select
                     value={settingsState.fontFamily}
                     onChange={(e) => settingsDispatch({ type: 'SET_FONT_FAMILY', payload: e.target.value })}
-                    className="h-7 rounded-[var(--radius-sm)] border border-[var(--color-border-default)] bg-[var(--color-surface-canvas)] px-2 text-xs text-[var(--color-text-body)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand)]"
+                    className="h-7 rounded-[var(--radius-sm)] border border-[var(--color-border-default)] bg-[var(--color-surface-canvas)] px-2 text-xs text-[var(--color-text-body)] cursor-pointer"
                 >
                     {FONT_FAMILIES.map((ff) => (
                         <option key={ff.value} value={ff.value}>
@@ -62,7 +62,7 @@ export function AppBar({ title }: { title: string }) {
                 <select
                     value={settingsState.splitLevel}
                     onChange={(e) => settingsDispatch({ type: 'SET_SPLIT_LEVEL', payload: Number(e.target.value) })}
-                    className="h-7 rounded-[var(--radius-sm)] border border-[var(--color-border-default)] bg-[var(--color-surface-canvas)] px-2 text-xs text-[var(--color-text-body)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand)]"
+                    className="h-7 rounded-[var(--radius-sm)] border border-[var(--color-border-default)] bg-[var(--color-surface-canvas)] px-2 text-xs text-[var(--color-text-body)] cursor-pointer"
                 >
                     {SPLIT_LEVELS.map((level) => (
                         <option key={level.value} value={level.value}>
