@@ -6,6 +6,7 @@ import { buildComponentMap } from "./pipeline/component-map";
 import { strictUrlTransform } from "./pipeline/url-transform";
 import { propsToCssVars } from "./utils/theme-to-css-vars";
 import ErrorBoundary from "./error-boundary";
+import { MdViewColorContext } from "./context/md-view-context";
 
 /** Props for the markdown rendering component. */
 export interface MarkdownRendererProps {
@@ -30,17 +31,19 @@ export function MarkdownRenderer({
   const style = propsToCssVars(colors, fontSizes, fonts);
 
   return (
-    <div className={`md-view ${className ?? ""}`.trim()} style={style}>
-      <ErrorBoundary fallback={markdown}>
-        <Markdown
-          remarkPlugins={REMARK_PLUGINS}
-          rehypePlugins={getRehypePlugins(colors.errorColor)}
-          urlTransform={strictUrlTransform}
-          components={mergedComponents}
-        >
-          {markdown}
-        </Markdown>
-      </ErrorBoundary>
-    </div>
+    <MdViewColorContext.Provider value={colors}>
+      <div className={`md-view ${className ?? ""}`.trim()} style={style}>
+        <ErrorBoundary fallback={markdown}>
+          <Markdown
+            remarkPlugins={REMARK_PLUGINS}
+            rehypePlugins={getRehypePlugins(colors.errorColor)}
+            urlTransform={strictUrlTransform}
+            components={mergedComponents}
+          >
+            {markdown}
+          </Markdown>
+        </ErrorBoundary>
+      </div>
+    </MdViewColorContext.Provider>
   );
 }

@@ -1,6 +1,7 @@
 import type { NodeProps } from "../../types/node-props";
 import { CodeInline } from "../inline/code-inline";
 import { CodeBlock } from "./code-block";
+import { MermaidBlock } from "./mermaid-block";
 
 /** Regex to detect language-* class on fenced code blocks. */
 const LANGUAGE_RE = /language-([\w-]+)/;
@@ -11,12 +12,18 @@ function isBlockCode(className: string | undefined, children: unknown): boolean 
   return typeof children === "string" && children.includes("\n");
 }
 
-/** Routes code elements to CodeBlock or CodeInline based on content. */
+/** Routes code elements to MermaidBlock, CodeBlock, or CodeInline based on content. */
 export function CodeRouter({ className, children }: NodeProps) {
   if (isBlockCode(className, children)) {
     const match = LANGUAGE_RE.exec(className ?? "");
+    const language = match?.[1];
+
+    if (language === "mermaid") {
+      return <MermaidBlock>{children}</MermaidBlock>;
+    }
+
     return (
-      <CodeBlock language={match?.[1]} codeClassName={className}>
+      <CodeBlock language={language} codeClassName={className}>
         {children}
       </CodeBlock>
     );
