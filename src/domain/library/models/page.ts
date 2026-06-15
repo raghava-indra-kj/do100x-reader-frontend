@@ -1,33 +1,32 @@
-import { z } from 'zod';
+import type { Section } from './section';
 
-export type Section = {
-    id: string;
-    pageId: string;
-    bookId: string | null;
-    title: string | null;
-    rawTitle: string | null;
-    level: number;
-    content: string | null;
-    children: Section[];
-};
+export { Section } from './section';
 
-export const SectionSchema: z.ZodType<Section> = z.object({
-    id: z.string(),
-    pageId: z.string(),
-    bookId: z.string().nullable(),
-    title: z.string().nullable(),
-    rawTitle: z.string().nullable(),
-    level: z.number(),
-    content: z.string().nullable(),
-    children: z.lazy(() => SectionSchema.array()),
-});
+export class Page {
+    readonly id: string;
+    readonly parentPageId: string | null;
+    readonly title: string;
+    readonly content: string;
+    readonly createdAt: Date;
+    readonly sections: Section[];
 
-export const PageSchema = z.object({
-    id: z.string(),
-    bookId: z.string().nullable(),
-    title: z.string(),
-    content: z.string(),
-    sections: SectionSchema.array(),
-});
+    constructor(
+        id: string,
+        parentPageId: string | null,
+        title: string,
+        content: string,
+        createdAt: Date,
+        sections: Section[],
+    ) {
+        this.id = id;
+        this.parentPageId = parentPageId;
+        this.title = title;
+        this.content = content;
+        this.createdAt = createdAt;
+        this.sections = sections;
+    }
 
-export type Page = z.infer<typeof PageSchema>;
+    isRootPage(): boolean {
+        return this.parentPageId === null;
+    }
+}

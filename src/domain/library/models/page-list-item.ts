@@ -1,10 +1,22 @@
-import { z } from 'zod';
+export class PageListItem {
+    readonly id: string;
+    readonly parentPageId: string | null;
+    readonly title: string;
+    readonly createdAt: Date;
 
-export const PageListItemSchema = z.object({
-    id: z.string(),
-    bookId: z.string().nullable(),
-    title: z.string(),
-    createdAt: z.date(),
-});
+    constructor(
+        id: string,
+        parentPageId: string | null,
+        title: string,
+        createdAt: Date,
+    ) {
+        this.id = id;
+        this.parentPageId = parentPageId;
+        this.title = title;
+        this.createdAt = createdAt;
+    }
 
-export type PageListItem = z.infer<typeof PageListItemSchema>;
+    isRootPage(): boolean {
+        return this.parentPageId === null;
+    }
+}

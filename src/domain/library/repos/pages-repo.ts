@@ -1,30 +1,29 @@
 import type { AsyncResult } from '@raghava.indra/result-ts';
 import type { AppError } from '../../../core/errors/app-error';
-import type { Page } from '../models/page';
-import type { PageListItem } from '../models/page-list-item';
+import type { DbPage } from '../models/db-page';
+import type { DbPageListItem } from '../models/db-page-list-item';
 
 export interface IPagesRepo {
 
-    getPage(params: { bookId: string | null; pageId: string }): AsyncResult<Page, AppError>;
+    getPage(params: { pageId: string }): AsyncResult<DbPage, AppError>;
 
     createPage(params: {
-        bookId: string | null;
+        parentPageId: string | null;
         title: string;
         content: string;
-    }): AsyncResult<PageListItem, AppError>;
+    }): AsyncResult<DbPageListItem, AppError>;
 
     editPage(params: {
-        bookId: string | null;
         pageId: string;
         title: string;
         content: string;
-    }): AsyncResult<PageListItem, AppError>;
+    }): AsyncResult<DbPageListItem, AppError>;
 
-    deletePage(params: { bookId: string | null; pageId: string }): AsyncResult<void, AppError>;
+    deletePage(params: { pageId: string }): AsyncResult<void, AppError>;
 
     queryPages(params: {
-        bookId: string | null;
+        parentPageId: string | null;
         searchQuery?: string | null;
-    }): AsyncResult<PageListItem[], AppError>;
+    }): AsyncResult<DbPageListItem[], AppError>;
 
 }
