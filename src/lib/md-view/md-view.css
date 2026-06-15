@@ -289,6 +289,21 @@
   vertical-align: middle;
 }
 
+.md-view audio,
+.md-view video,
+.md-view iframe {
+  display: block;
+  max-width: 100%;
+  margin: 0.75rem 0;
+  border-radius: 0.375rem;
+}
+
+.md-view iframe {
+  border: none;
+  width: 100%;
+  min-height: 200px;
+}
+
 /* ---- Mermaid ---- */
 
 .md-view .md-mermaid {
@@ -299,7 +314,6 @@
 }
 
 .md-view .md-mermaid svg {
-  max-width: 100%;
   height: auto;
 }
 
@@ -343,6 +357,7 @@
 .md-view,
 .md-view .md-table-wrap,
 .md-view .md-code-block,
+.md-view .md-mermaid,
 .md-view .katex-display {
   scrollbar-width: thin;
   scrollbar-color: var(--md-color-scrollbarThumb) var(--md-color-scrollbarTrack);

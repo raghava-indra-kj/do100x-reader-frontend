@@ -77,12 +77,24 @@ export function MermaidBlock({ children }: { children?: unknown }) {
     setSvg(null);
     setError(null);
 
+    // Empty source — nothing to render.
+    if (!source) {
+      setError("empty");
+      return;
+    }
+
     const id = `mermaid-${Math.random().toString(36).slice(2, 9)}`;
 
     loadMermaidModule()
-      .then((m) => {
-        if (cancelled) return;
+      .then(async (m) => {
+        if (cancelled) return undefined;
         m.initialize(buildMermaidConfig(colors));
+
+        // Pre-validate before render. mermaid.parse() throws on syntax errors
+        // without touching the DOM, so invalid diagrams never reach render()
+        // and can't append stray error SVGs to document.body.
+        await m.parse(source);
+
         return m.render(id, source);
       })
       .then((result) => {
@@ -100,6 +112,8 @@ export function MermaidBlock({ children }: { children?: unknown }) {
   }, [source, colorsKey]);
 
   if (error) {
+    // Empty source — render nothing rather than an empty code block.
+    if (error === "empty") return null;
     return (
       <pre className="md-code-block">
         <code>{source}</code>

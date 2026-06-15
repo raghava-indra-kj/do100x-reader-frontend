@@ -115,6 +115,36 @@ Themes automatically match the active md-view color palette.
 ```
 `icon` is optional. Renders with a styled background distinct from blockquotes.
 
+## Audio & Video
+```html
+<audio controls preload="metadata" src="url.mp3"></audio>
+
+<video controls preload="metadata" poster="cover.jpg">
+  <source src="url.mp4" type="video/mp4">
+  <source src="url.webm" type="video/webm">
+  <track kind="subtitles" src="subs.vtt" srclang="en" label="English" default>
+</video>
+```
+Allowed `<audio>` attributes: `src` `controls` `loop` `muted` `preload`  
+Allowed `<video>` attributes: `src` `controls` `loop` `muted` `preload` `poster` `width` `height` `playsinline`  
+Allowed `<track>` attributes: `src` `kind` `srclang` `label` `default`  
+Allowed `<source>` attributes: `src` `type` `media` `srcset` `sizes`  
+`autoplay` is always stripped. Event handlers (`onplay`, `onerror`, etc.) are stripped. `javascript:` in URLs is blocked.
+
+## iframe
+```html
+<iframe
+  src="https://www.youtube.com/embed/VIDEO_ID"
+  width="560"
+  height="315"
+  title="Video title"
+  loading="lazy"
+  allowfullscreen>
+</iframe>
+```
+Allowed attributes: `src` `width` `height` `title` `loading` `allowfullscreen` `allow` `sandbox`  
+Blocked: `srcdoc` (arbitrary HTML injection) · all event attributes
+
 ## Horizontal Rule
 `---` or `***` or `___`
 
@@ -123,8 +153,8 @@ Themes automatically match the active md-view color palette.
 - Line ending with `\` or two trailing spaces → `<br>` (hard break)
 
 ## Raw HTML
-Passthrough HTML is sanitized. Safe elements allowed: `<details>` `<summary>` `<callout>` `<input>` plus all standard HTML.  
-Stripped: `<script>` `<style>` `<iframe>` `<object>` `<embed>` and all event attributes.
+Passthrough HTML is sanitized. Safe elements allowed: `<details>` `<summary>` `<callout>` `<input>` `<audio>` `<video>` `<track>` `<source>` `<iframe>` plus all standard HTML.  
+Stripped: `<script>` `<style>` `<object>` `<embed>` and all event attributes. On `<iframe>`: `srcdoc` is stripped.
 
 ---
 

@@ -14,9 +14,12 @@ MATH: $inline expr$  $$\nblock expr\n$$  (KaTeX)
 MERMAID: ```mermaid\n...\n```  types: flowchart sequenceDiagram gantt pie classDiagram stateDiagram erDiagram journey timeline mindmap
 COLLAPSIBLE: <details><summary>Label</summary>content</details>  add `open` to pre-expand
 CALLOUT: <callout icon="emoji">text</callout>  icon optional — prefer over blockquote for tips/warnings/notes
+AUDIO: <audio controls preload="metadata" src="url.mp3"></audio>  attrs: src controls loop muted preload
+VIDEO: <video controls preload="metadata" poster="img.jpg"><source src="url.mp4" type="video/mp4"><track kind="subtitles" src="s.vtt" srclang="en" label="English" default></video>  attrs: src controls loop muted preload poster width height playsinline
+IFRAME: <iframe src="https://www.youtube.com/embed/ID" width="560" height="315" title="label" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  attrs: src width height title loading allowfullscreen allow sandbox — NOT: srcdoc
 LINE BREAK: line ending with \ or 2 spaces = hard break
 
-BLOCKED URLS: javascript: data: vbscript: file:
+BLOCKED: autoplay stripped always — javascript:/data:/vbscript:/file: in URLs — all event attrs (onerror onplay etc) — srcdoc allow(permissions) object embed script style
 UNSUPPORTED — do not use: ==highlight==  ~sub~  ^super^  :emoji-code:  definition lists
 
 RULES:
