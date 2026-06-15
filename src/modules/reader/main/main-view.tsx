@@ -19,7 +19,7 @@ interface MainViewProps {
 
 export function MainView({ sections, currentSectionIndex, onSectionChange }: MainViewProps) {
     const { state: themeState } = useThemeStore();
-    const { state: settingsState } = useReaderSettings();
+    const { state: settingsState, dispatch: settingsDispatch } = useReaderSettings();
     const colors = themeState.theme === THEMES[1].value ? colorDark : colorLight;
     const fontSizes = getFontSizes(settingsState);
     const fonts = getFontFamilyByValue(settingsState.fontFamily);
@@ -41,6 +41,10 @@ export function MainView({ sections, currentSectionIndex, onSectionChange }: Mai
                 onSectionChange(currentSectionIndex - 1);
             } else if (e.key === 'ArrowRight' && hasNext) {
                 onSectionChange(currentSectionIndex + 1);
+            } else if ((e.key === '+' || e.key === '=') && !e.ctrlKey && !e.metaKey) {
+                settingsDispatch({ type: 'INCREASE_FONT' });
+            } else if (e.key === '-' && !e.ctrlKey && !e.metaKey) {
+                settingsDispatch({ type: 'DECREASE_FONT' });
             }
         };
         window.addEventListener('keydown', handleKeyDown);
