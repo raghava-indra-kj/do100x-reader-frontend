@@ -19,7 +19,7 @@ VIDEO: <video controls preload="metadata" poster="img.jpg"><source src="url.mp4"
 IFRAME: <iframe src="https://www.youtube.com/embed/ID" width="560" height="315" title="label" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  attrs: src width height title loading allowfullscreen allow sandbox — NOT: srcdoc
 LINE BREAK: line ending with \ or 2 spaces = hard break
 
-BLOCKED: autoplay stripped always — javascript:/data:/vbscript:/file: in URLs — all event attrs (onerror onplay etc) — srcdoc allow(permissions) object embed script style
+BLOCKED: autoplay stripped always — javascript:/data:/vbscript:/file: in URLs — all event attrs (onerror onplay etc) — srcdoc object embed script style
 UNSUPPORTED — do not use: ==highlight==  ~sub~  ^super^  :emoji-code:  definition lists
 
 RULES:
