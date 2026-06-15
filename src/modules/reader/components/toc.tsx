@@ -45,7 +45,7 @@ function TocItem({ section, activeId, onSectionClick, depth = 0 }: TocItemProps)
                 )}
                 style={{ paddingLeft: `${depth * 16 + 8}px` }}
             >
-                <span className="truncate">{section.title}</span>
+                <span>{section.title}</span>
             </button>
             {section.children.length > 0 && (
                 <div className="mt-0.5 flex flex-col">

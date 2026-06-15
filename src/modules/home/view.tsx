@@ -46,6 +46,24 @@ export function HomeView() {
         loadPages();
     };
 
+    useEffect(() => {
+        const handlePaste = async (e: ClipboardEvent) => {
+            if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+            const text = e.clipboardData?.getData('text/plain');
+            if (!text?.trim()) return;
+
+            e.preventDefault();
+
+            const h1Match = text.match(/^#\s+(.+)$/m);
+            const title = h1Match ? h1Match[1].trim() : 'Untitled';
+            const page = await createPage({ title, content: text.trim() });
+            navigate(`/reader/${page.id}`);
+        };
+
+        window.addEventListener('paste', handlePaste);
+        return () => window.removeEventListener('paste', handlePaste);
+    }, [navigate]);
+
     return (
         <div className="flex h-screen flex-col overflow-hidden">
             <AppBar />
@@ -62,8 +80,11 @@ export function HomeView() {
 
                     {pages.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-24 text-center">
-                            <p className="text-[var(--color-text-muted)] mb-4">
-                                No pages yet. Create your first page to start reading.
+                            <p className="text-[var(--color-text-muted)] mb-2">
+                                No pages yet. Paste markdown anywhere to auto-create a page.
+                            </p>
+                            <p className="text-xs text-[var(--color-text-subtle)] mb-4">
+                                The first H1 heading will be used as the title.
                             </p>
                             <Button onClick={() => setNewDialogOpen(true)}>
                                 <Plus size={16} className="mr-2" />

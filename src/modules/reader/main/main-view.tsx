@@ -41,6 +41,12 @@ export function MainView({ sections, currentSectionIndex, onSectionChange }: Mai
                 onSectionChange(currentSectionIndex - 1);
             } else if (e.key === 'ArrowRight' && hasNext) {
                 onSectionChange(currentSectionIndex + 1);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                scrollRef.current?.scrollBy({ top: -80, behavior: 'smooth' });
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                scrollRef.current?.scrollBy({ top: 80, behavior: 'smooth' });
             } else if ((e.key === '+' || e.key === '=') && !e.ctrlKey && !e.metaKey) {
                 settingsDispatch({ type: 'INCREASE_FONT' });
             } else if (e.key === '-' && !e.ctrlKey && !e.metaKey) {

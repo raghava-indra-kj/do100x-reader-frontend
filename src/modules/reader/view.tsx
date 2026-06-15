@@ -3,6 +3,7 @@ import type { Page } from '@modules/pages/models/page';
 import { AppBar } from './components/appbar';
 import { MainView } from './main/main-view';
 import { Toc } from './components/toc';
+import { SettingsPanel } from './components/settings-panel';
 import { ReaderSettingsProvider, useReaderSettings } from './store/reader-settings';
 import { parseSections, flattenSections } from './services/section-parser';
 import type { Section } from './services/section-parser';
@@ -19,6 +20,7 @@ function ReaderLayout({ page }: { page: Page }) {
     const { state: settingsState } = useReaderSettings();
     const [sections, setSections] = useState<Section[]>([]);
     const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+    const [settingsOpen, setSettingsOpen] = useState(false);
 
     useEffect(() => {
         const parsed = parseSections(page.content, settingsState.splitLevel);
@@ -36,7 +38,7 @@ function ReaderLayout({ page }: { page: Page }) {
 
     return (
         <div className="flex h-screen flex-col bg-[var(--color-surface-canvas)]">
-            <AppBar title={page.title} />
+            <AppBar title={page.title} onSettingsOpen={() => setSettingsOpen(true)} />
             <div className="flex flex-1 overflow-hidden">
                 {settingsState.tocOpen && sections.length > 0 && (
                     <aside className="w-60 shrink-0 overflow-y-auto border-r border-[var(--color-border-default)] bg-[var(--color-surface-raised)] px-2">
@@ -53,6 +55,7 @@ function ReaderLayout({ page }: { page: Page }) {
                     onSectionChange={setCurrentSectionIndex}
                 />
             </div>
+            <SettingsPanel open={settingsOpen} onOpenChange={setSettingsOpen} />
         </div>
     );
 }

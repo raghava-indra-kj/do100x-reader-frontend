@@ -1,15 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Settings, AArrowDown, AArrowUp, PanelLeft } from 'lucide-react';
 import { IconButton } from '@modules/core/ui/primitives/icon-button';
-import { ThemeSwitch } from '@modules/core/ui/primitives/theme-switch';
-import { useThemeStore, THEMES } from '@modules/core/ui/theme/app-theme-store';
-import { useReaderSettings, canDecrease, canIncrease, SPLIT_LEVELS } from '../store/reader-settings';
-import { FONT_FAMILIES } from '../theme/font-families';
+import { useReaderSettings, canDecrease, canIncrease } from '../store/reader-settings';
 
-export function AppBar({ title }: { title: string }) {
+interface AppBarProps {
+    title: string;
+    onSettingsOpen: () => void;
+}
+
+export function AppBar({ title, onSettingsOpen }: AppBarProps) {
     const navigate = useNavigate();
-    const { state: themeState, dispatch: themeDispatch } = useThemeStore();
-    const isDark = themeState.theme === THEMES[1].value;
     const { state: settingsState, dispatch: settingsDispatch } = useReaderSettings();
 
     return (
@@ -21,7 +21,7 @@ export function AppBar({ title }: { title: string }) {
                 <IconButton variant="ghost" size="sm" aria-label="Toggle table of contents" onClick={() => settingsDispatch({ type: 'TOGGLE_TOC' })}>
                     <PanelLeft size={16} />
                 </IconButton>
-                <span className="text-lg font-semibold text-[var(--color-text-strong)]">
+                <span className="text-lg font-semibold text-[var(--color-text-strong)] truncate max-w-[200px]">
                     {title}
                 </span>
             </div>
@@ -47,43 +47,7 @@ export function AppBar({ title }: { title: string }) {
                     </IconButton>
                 </div>
                 <div className="mx-2 h-5 w-px bg-[var(--color-border-default)]" />
-                <select
-                    value={settingsState.fontFamily}
-                    onChange={(e) => settingsDispatch({ type: 'SET_FONT_FAMILY', payload: e.target.value })}
-                    className="h-7 rounded-[var(--radius-sm)] border border-[var(--color-border-default)] bg-[var(--color-surface-canvas)] px-2 text-xs text-[var(--color-text-body)] cursor-pointer"
-                >
-                    {FONT_FAMILIES.map((ff) => (
-                        <option key={ff.value} value={ff.value}>
-                            {ff.label}
-                        </option>
-                    ))}
-                </select>
-                <div className="mx-2 h-5 w-px bg-[var(--color-border-default)]" />
-                <select
-                    value={settingsState.splitLevel}
-                    onChange={(e) => settingsDispatch({ type: 'SET_SPLIT_LEVEL', payload: Number(e.target.value) })}
-                    className="h-7 rounded-[var(--radius-sm)] border border-[var(--color-border-default)] bg-[var(--color-surface-canvas)] px-2 text-xs text-[var(--color-text-body)] cursor-pointer"
-                >
-                    {SPLIT_LEVELS.map((level) => (
-                        <option key={level.value} value={level.value}>
-                            {level.label}
-                        </option>
-                    ))}
-                </select>
-                <div className="mx-2 h-5 w-px bg-[var(--color-border-default)]" />
-                <div className="px-1">
-                    <ThemeSwitch
-                        checked={isDark}
-                        onCheckedChange={(checked) =>
-                            themeDispatch({
-                                type: 'SWITCH_THEME',
-                                payload: checked ? THEMES[1].value : THEMES[0].value,
-                            })
-                        }
-                    />
-                </div>
-                <div className="mx-2 h-5 w-px bg-[var(--color-border-default)]" />
-                <IconButton variant="ghost" size="sm" aria-label="Settings" className="ml-1">
+                <IconButton variant="ghost" size="sm" aria-label="Settings" onClick={onSettingsOpen}>
                     <Settings size={16} />
                 </IconButton>
             </div>
