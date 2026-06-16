@@ -1,22 +1,26 @@
 import { lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { homePageRoute, mdParserLibDemoRoute, mdViewLibDemoRoute, pagesPageRoute, pagesPageWithIdRoute } from './routes';
+import { AuthProvider } from '@modules/auth/provider';
+import { homePageRoute, loginPageRoute, mdParserLibDemoRoute, mdViewLibDemoRoute, pagesPageWithIdRoute } from './routes';
 
-const ReaderPage = lazy(() => import('../modules/reader/page'));
 const HomePage = lazy(() => import('../modules/home/page'));
 const MdViewLibDemoPage = lazy(() => import('../lib/md-view/demo-page'));
 const MdParserLibDemoPage = lazy(() => import('../lib/md-parser/demo-page'));
+const LoginPage = lazy(() => import('../modules/auth/login/page'));
+const PagePage = lazy(() => import('../modules/page/page'));
 
 export function AppRouter() {
     return (
         <BrowserRouter>
-            <Routes>
-                <Route path={homePageRoute} element={<HomePage />} />
-                <Route path={pagesPageRoute} element={<ReaderPage />} />
-                <Route path={pagesPageWithIdRoute} element={<ReaderPage />} />
-                <Route path={mdViewLibDemoRoute} element={<MdViewLibDemoPage />} />
-                <Route path={mdParserLibDemoRoute} element={<MdParserLibDemoPage />} />
-            </Routes>
+            <AuthProvider>
+                <Routes>
+                    <Route path={homePageRoute} element={<HomePage />} />
+                    <Route path={pagesPageWithIdRoute} element={<PagePage />} />
+                    <Route path={mdViewLibDemoRoute} element={<MdViewLibDemoPage />} />
+                    <Route path={mdParserLibDemoRoute} element={<MdParserLibDemoPage />} />
+                    <Route path={loginPageRoute} element={<LoginPage />} />
+                </Routes>
+            </AuthProvider>
         </BrowserRouter>
     );
 }

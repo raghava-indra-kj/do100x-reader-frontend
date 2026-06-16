@@ -3,6 +3,7 @@ import { loadEnv } from '@core/models/env';
 import '@fontsource/atkinson-hyperlegible/400.css';
 import '@fontsource/atkinson-hyperlegible/700.css';
 import { TooltipProvider } from '@modules/core/ui/primitives/tooltip';
+import { ToastProvider } from '@modules/core/ui/primitives/toast';
 import { ThemeProvider } from '@modules/core/theme';
 import '@styles/globals.css';
 import { StrictMode } from 'react';
@@ -14,9 +15,11 @@ async function main() {
     createRoot(rootElement).render(
         <StrictMode>
             <ThemeProvider>
-                <TooltipProvider delay={400}>
-                    <AppRouter />
-                </TooltipProvider>
+                <ToastProvider>
+                    <TooltipProvider delay={400}>
+                        <AppRouter />
+                    </TooltipProvider>
+                </ToastProvider>
             </ThemeProvider>
         </StrictMode>
     );

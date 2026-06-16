@@ -14,6 +14,7 @@ export function toPageListItem(db: DbPageListItem): PageListItem {
         id: db.id,
         parentPageId: db.parentPageId,
         title: db.title,
+        sortOrder: db.sortOrder,
         createdAt: db.createdAt,
         updatedAt: db.updatedAt
     });

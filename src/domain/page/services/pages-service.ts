@@ -59,3 +59,10 @@ export async function queryPages(
     if (!result.ok) return result;
     return ok(result.data.map(toPageListItem));
 }
+
+export async function swapSortOrder(
+    params: { pageId1: string; pageId2: string },
+    repo: IPagesRepo
+): AsyncResult<void, AppError> {
+    return repo.swapSortOrder(params);
+}

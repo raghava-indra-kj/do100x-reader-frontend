@@ -25,4 +25,9 @@ export interface IPagesRepo {
         parentPageId?: string | null;
         searchQuery?: string | null;
     }): AsyncResult<DbPageListItem[], AppError>;
+
+    swapSortOrder(params: {
+        pageId1: string;
+        pageId2: string;
+    }): AsyncResult<void, AppError>;
 }
