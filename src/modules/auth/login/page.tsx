@@ -1,46 +1,64 @@
-import { useMemo, type FormEvent } from 'react';
-import { observer } from 'mobx-react-lite';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { pagesPageWithIdRouteValue } from '@boot/routes';
+import { AppBar } from '@modules/core/ui/components/appbar';
 import { Button } from '@modules/core/ui/primitives/button';
 import { FormError } from '@modules/core/ui/primitives/form-error';
 import { Input } from '@modules/core/ui/primitives/input';
+import { Observer } from 'mobx-react-lite';
+import { useMemo } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../provider/store';
 import { LoginStore } from './store';
 
-export default observer(function LoginPage() {
+export default function LoginPage() {
     const navigate = useNavigate();
     const authStore = useAuthStore();
-    const loginStore = useMemo(
-        () => new LoginStore({ navigate, authStore }),
-        [authStore],
-    );
+    const loginStore = useMemo(() => new LoginStore({ navigate, authStore }), [authStore]);
 
     if (authStore.isAuthenticated) {
-        return <Navigate to="/" replace />;
+        const currentUser = authStore.currentUser;
+        const redirectUrl = pagesPageWithIdRouteValue(currentUser.homepageId);
+        return <Navigate to={redirectUrl} replace />;
     }
 
-    const handleSubmit = async (e: FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         await loginStore.submit();
     };
 
     return (
-        <div className="flex h-screen items-center justify-center bg-[var(--color-surface-canvas)]">
-            <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4 rounded-[var(--radius-lg)] bg-[var(--color-surface-card)] p-6">
-                <h1 className="text-lg font-semibold text-[var(--color-text-strong)]">Login</h1>
-                <div className="space-y-2">
-                    <label className="text-sm font-medium text-[var(--color-text-body)]">Username</label>
-                    <Input value={loginStore.username} onValueChange={loginStore.setUsername} placeholder="Enter username" />
-                </div>
-                <div className="space-y-2">
-                    <label className="text-sm font-medium text-[var(--color-text-body)]">Password</label>
-                    <Input type="password" value={loginStore.password} onValueChange={loginStore.setPassword} placeholder="Enter password" />
-                </div>
-                {loginStore.error && <FormError message={loginStore.error} />}
-                <Button type="submit" className="w-full" disabled={!loginStore.isSubmittable || loginStore.submitting}>
-                    {loginStore.submitting ? 'Logging in...' : 'Login'}
-                </Button>
-            </form>
+        <div className="flex h-screen flex-col bg-[var(--color-surface-canvas)]">
+            <AppBar />
+            <div className="flex flex-1 items-center justify-center p-4">
+                <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4 rounded-[var(--radius-lg)] bg-[var(--color-surface-card)] p-6">
+                    <h1 className="text-lg font-semibold text-[var(--color-text-strong)]">Login</h1>
+                    <Observer>
+                        {() => (
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-[var(--color-text-body)]">Username</label>
+                                <Input value={loginStore.username} onValueChange={(v) => loginStore.setUsername(v)} placeholder="Enter username" />
+                            </div>
+                        )}
+                    </Observer>
+                    <Observer>
+                        {() => (
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-[var(--color-text-body)]">Password</label>
+                                <Input type="password" value={loginStore.password} onValueChange={(v) => loginStore.setPassword(v)} placeholder="Enter password" />
+                            </div>
+                        )}
+                    </Observer>
+                    <Observer>
+                        {() => (
+                            <>
+                                {loginStore.error && <FormError message={loginStore.error} />}
+                                <Button type="submit" className="w-full" disabled={!loginStore.isSubmittable || loginStore.submitting}>
+                                    {loginStore.submitting ? 'Logging in...' : 'Login'}
+                                </Button>
+                            </>
+                        )}
+                    </Observer>
+                </form>
+            </div>
         </div>
     );
-});
+}
