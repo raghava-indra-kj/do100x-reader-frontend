@@ -28,8 +28,9 @@ export default function LoginPage() {
     return (
         <div className="flex h-screen flex-col bg-[var(--color-surface-canvas)]">
             <AppBar />
-            <div className="flex flex-1 items-center justify-center p-4">
-                <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4 rounded-[var(--radius-lg)] bg-[var(--color-surface-card)] p-6">
+            <div className="flex-1 overflow-y-auto">
+                <div className="min-h-full flex flex-col p-4">
+                    <form onSubmit={handleSubmit} className="w-full max-w-sm mx-auto my-auto space-y-4 rounded-[var(--radius-lg)] bg-[var(--color-surface-card)] p-6">
                     <h1 className="text-lg font-semibold text-[var(--color-text-strong)]">Login</h1>
                     <Observer>
                         {() => (
@@ -57,7 +58,8 @@ export default function LoginPage() {
                             </>
                         )}
                     </Observer>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     );

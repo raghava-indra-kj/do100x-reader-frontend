@@ -104,8 +104,10 @@ export default function HomePage() {
     return (
         <div className="flex h-screen flex-col bg-[var(--color-surface-canvas)]">
             <AppBar />
-            <HeroSection />
-            <FeaturesSection />
+            <div className="flex flex-1 flex-col overflow-y-auto">
+                <HeroSection />
+                <FeaturesSection />
+            </div>
         </div>
     );
 }
