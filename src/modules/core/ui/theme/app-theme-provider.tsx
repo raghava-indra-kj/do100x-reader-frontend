@@ -1,8 +1,8 @@
 import { useEffect, type ReactNode } from 'react';
 import {
+    THEMES,
     ThemeStoreProvider,
     useThemeStore,
-    THEMES,
 } from './app-theme-store';
 
 export function AppThemeProvider({ children }: { children: ReactNode }) {

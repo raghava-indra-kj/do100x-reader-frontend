@@ -11,19 +11,18 @@ export interface IPagesRepo {
         parentPageId: string | null;
         title: string;
         content: string;
-    }): AsyncResult<DbPageListItem, AppError>;
+    }): AsyncResult<string, AppError>;
 
     editPage(params: {
         pageId: string;
         title: string;
         content: string;
-    }): AsyncResult<DbPageListItem, AppError>;
+    }): AsyncResult<void, AppError>;
 
     deletePage(params: { pageId: string }): AsyncResult<void, AppError>;
 
     queryPages(params: {
-        parentPageId: string | null;
+        parentPageId?: string | null;
         searchQuery?: string | null;
     }): AsyncResult<DbPageListItem[], AppError>;
-
 }

@@ -1,10 +1,12 @@
 import { z } from 'zod';
 
-export const DbPageListItemSchema = z.object({
+export const DbPageSchema = z.object({
     id: z.string(),
     parentPageId: z.string().nullable(),
     title: z.string(),
+    content: z.string(),
     createdAt: z.date(),
+    updatedAt: z.date(),
 });
 
-export type DbPageListItem = z.infer<typeof DbPageListItemSchema>;
+export type DbPage = z.infer<typeof DbPageSchema>;
