@@ -1,4 +1,6 @@
+import 'reflect-metadata';
 import { AppRouter } from '@boot/router';
+import '@di/container';
 import { loadEnv } from '@core/models/env';
 import '@fontsource/atkinson-hyperlegible/400.css';
 import '@fontsource/atkinson-hyperlegible/700.css';

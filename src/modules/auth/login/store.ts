@@ -1,6 +1,5 @@
 import { pagesPageWithIdRouteValue } from '@boot/routes';
-import type { IAuthRepo } from '@domain/auth/repos/auth-repo';
-import { toCurrentUser } from '@domain/auth/services/auth-mapper';
+import { me as authenticate } from '@domain/auth/services/auth-service';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import type { NavigateFunction } from 'react-router-dom';
 import type { AuthStore } from '../provider/store';
@@ -11,15 +10,13 @@ export class LoginStore {
     error: string | null;
     submitting: boolean;
     navigate: NavigateFunction;
-    private repo: IAuthRepo;
     private authStore: AuthStore;
 
-    constructor({ navigate, repo, authStore }: { navigate: NavigateFunction; repo: IAuthRepo; authStore: AuthStore }) {
+    constructor({ navigate, authStore }: { navigate: NavigateFunction; authStore: AuthStore }) {
         this.username = '';
         this.password = '';
         this.error = null;
         this.submitting = false;
-        this.repo = repo;
         this.authStore = authStore;
         this.navigate = navigate;
         makeObservable(this, {
@@ -57,14 +54,13 @@ export class LoginStore {
             });
             return;
         }
-        const result = await this.repo.me({ username: this.username, password: this.password });
+        const result = await authenticate({ username: this.username, password: this.password });
         runInAction(() => {
             this.submitting = false;
             if (result.ok) {
                 this.error = null;
-                const currentUser = toCurrentUser(result.data);
-                this.authStore.setCurrentUser(currentUser);
-                this.navigate(pagesPageWithIdRouteValue(currentUser.homepageId));
+                this.authStore.setCurrentUser(result.data);
+                this.navigate(pagesPageWithIdRouteValue(result.data.homepageId));
             } else {
                 this.error = result.error.message;
             }

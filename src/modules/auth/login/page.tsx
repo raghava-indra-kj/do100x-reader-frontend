@@ -11,7 +11,7 @@ export default observer(function LoginPage() {
     const navigate = useNavigate();
     const authStore = useAuthStore();
     const loginStore = useMemo(
-        () => new LoginStore({ repo: null as never, authStore }),
+        () => new LoginStore({ navigate, authStore }),
         [authStore],
     );
 
@@ -22,9 +22,6 @@ export default observer(function LoginPage() {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         await loginStore.submit();
-        if (authStore.isAuthenticated) {
-            navigate('/');
-        }
     };
 
     return (
