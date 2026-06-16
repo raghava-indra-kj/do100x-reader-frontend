@@ -9,7 +9,7 @@ import { EditPageDialog } from './components/edit-page-dialog';
 import { PageListItem } from './components/page-list-item';
 import { createPage, editPage, deletePage, queryPages } from '@modules/pages/services/page-service';
 import type { Page } from '@modules/pages/models/page';
-import { pagesPageWithIdRouteValue } from '../../../boot/routes';
+import { pagesPageWithIdRouteValue } from '@boot/routes';
 
 export function HomeView() {
     const navigate = useNavigate();
