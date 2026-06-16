@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { Input as BaseInput, type InputProps as BaseInputProps } from '@base-ui/react/input';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@modules/core/ui/lib/cn';
+import { cn } from '@lib/utils/cn';
 
 const inputVariants = cva(
     'w-full border border-[var(--color-border-default)] bg-[var(--color-surface-raised)] text-[var(--color-text-strong)] transition-colors placeholder:text-[var(--color-text-subtle)] disabled:cursor-not-allowed disabled:opacity-50',

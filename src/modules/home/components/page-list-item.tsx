@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { FileText, Trash2, Pencil } from 'lucide-react';
-import { IconButton } from '@modules/core/ui/primitives/icon-button';
+import { Button } from '@modules/core/ui/primitives/button';
 import type { Page } from '@modules/pages/models/page';
 import { pagesPageWithIdRouteValue } from '@boot/routes';
 
@@ -44,12 +44,12 @@ export function PageListItem({ page, onDelete, onEdit }: PageListItemProps) {
                 </div>
             </div>
             <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
-                <IconButton variant="ghost" size="sm" aria-label="Edit page" onClick={handleEdit}>
+                <Button iconOnly variant="ghost" size="sm" aria-label="Edit page" tooltip="Edit" onClick={handleEdit}>
                     <Pencil size={14} />
-                </IconButton>
-                <IconButton variant="ghost" size="sm" aria-label="Delete page" onClick={handleDelete}>
+                </Button>
+                <Button iconOnly variant="ghost" size="sm" aria-label="Delete page" tooltip="Delete" onClick={handleDelete}>
                     <Trash2 size={14} />
-                </IconButton>
+                </Button>
             </div>
         </div>
     );

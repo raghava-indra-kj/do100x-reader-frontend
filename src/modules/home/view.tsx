@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Plus } from 'lucide-react';
 import { AppBar } from './components/appbar';
 import { Button } from '@modules/core/ui/primitives/button';
-import { IconButton } from '@modules/core/ui/primitives/icon-button';
 import { NewPageDialog } from './components/new-page-dialog';
 import { EditPageDialog } from './components/edit-page-dialog';
 import { PageListItem } from './components/page-list-item';
@@ -74,9 +73,9 @@ export function HomeView() {
                         <h1 className="text-2xl font-semibold text-[var(--color-text-strong)]">
                             Pages
                         </h1>
-                        <IconButton variant="primary" size="sm" aria-label="New page" onClick={() => setNewDialogOpen(true)}>
+                        <Button iconOnly variant="primary" size="sm" aria-label="New page" tooltip="New page" onClick={() => setNewDialogOpen(true)}>
                             <Plus size={16} />
-                        </IconButton>
+                        </Button>
                     </div>
 
                     {pages.length === 0 ? (
@@ -87,8 +86,7 @@ export function HomeView() {
                             <p className="text-xs text-[var(--color-text-subtle)] mb-4">
                                 The first H1 heading will be used as the title.
                             </p>
-                            <Button onClick={() => setNewDialogOpen(true)}>
-                                <Plus size={16} className="mr-2" />
+                            <Button startIcon={<Plus size={16} />} onClick={() => setNewDialogOpen(true)}>
                                 New page
                             </Button>
                         </div>

@@ -1,9 +1,10 @@
-import { forwardRef, type TextareaHTMLAttributes } from 'react';
+import { forwardRef, type ComponentPropsWithoutRef } from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@modules/core/ui/lib/cn';
+import { cn } from '@lib/utils/cn';
 
 const textareaVariants = cva(
-    'w-full border border-[var(--color-border-default)] bg-[var(--color-surface-raised)] text-[var(--color-text-strong)] transition-colors placeholder:text-[var(--color-text-subtle)] disabled:cursor-not-allowed disabled:opacity-50 resize-y',
+    'w-full border border-[var(--color-border-default)] bg-[var(--color-surface-raised)] text-[var(--color-text-strong)] transition-colors placeholder:text-[var(--color-text-subtle)] disabled:cursor-not-allowed disabled:opacity-50',
     {
         variants: {
             size: {
@@ -19,14 +20,15 @@ const textareaVariants = cva(
 );
 
 export interface TextareaProps
-    extends TextareaHTMLAttributes<HTMLTextAreaElement>,
+    extends Omit<ComponentPropsWithoutRef<typeof TextareaAutosize>, 'size'>,
         VariantProps<typeof textareaVariants> {}
 
 const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-    ({ className, size, ...props }, ref) => {
+    ({ className, size, minRows = 3, ...props }, ref) => {
         return (
-            <textarea
+            <TextareaAutosize
                 ref={ref}
+                minRows={minRows}
                 className={cn(textareaVariants({ size, className }))}
                 {...props}
             />

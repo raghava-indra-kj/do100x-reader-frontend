@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
-@import "./variables.css";
+@import "./primitives.css";
+@import "./semantic.css";
+@import "./components.css";
 @import "tailwindcss";
 
 @keyframes fade-in {

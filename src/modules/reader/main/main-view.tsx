@@ -1,9 +1,10 @@
+import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { MarkdownRenderer } from '@lib/md-view';
 import { getFontFamilyByValue } from '../theme/font-families';
 import { colorLight, colorDark } from '../theme/color-schema';
-import { useThemeStore, THEMES } from '@modules/core/ui/theme/app-theme-store';
+import { useThemeStore, Theme } from '@modules/core/theme';
 import { useReaderSettings, getFontSizes } from '../store/reader-settings';
 import { flattenSections } from '../services/section-parser';
 import type { Section } from '../services/section-parser';
@@ -17,10 +18,10 @@ interface MainViewProps {
     onSectionChange: (index: number) => void;
 }
 
-export function MainView({ sections, currentSectionIndex, onSectionChange }: MainViewProps) {
-    const { state: themeState } = useThemeStore();
+export const MainView = observer(function MainView({ sections, currentSectionIndex, onSectionChange }: MainViewProps) {
+    const store = useThemeStore();
     const { state: settingsState, dispatch: settingsDispatch } = useReaderSettings();
-    const colors = themeState.theme === THEMES[1].value ? colorDark : colorLight;
+    const colors = store.theme === Theme.DARK ? colorDark : colorLight;
     const fontSizes = getFontSizes(settingsState);
     const fonts = getFontFamilyByValue(settingsState.fontFamily);
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -76,9 +77,9 @@ export function MainView({ sections, currentSectionIndex, onSectionChange }: Mai
                     <Button
                         variant="ghost"
                         disabled={!hasPrev}
+                        startIcon={<ChevronLeft size={16} />}
                         onClick={() => onSectionChange(currentSectionIndex - 1)}
                     >
-                        <ChevronLeft size={16} className="mr-1" />
                         Previous
                     </Button>
                     <span className="text-sm text-[var(--color-text-muted)]">
@@ -87,13 +88,13 @@ export function MainView({ sections, currentSectionIndex, onSectionChange }: Mai
                     <Button
                         variant="ghost"
                         disabled={!hasNext}
+                        endIcon={<ChevronRight size={16} />}
                         onClick={() => onSectionChange(currentSectionIndex + 1)}
                     >
                         Next
-                        <ChevronRight size={16} className="ml-1" />
                     </Button>
                 </div>
             </div>
         </div>
     );
-}
+});

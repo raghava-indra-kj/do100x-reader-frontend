@@ -1,9 +1,10 @@
+import { observer } from 'mobx-react-lite';
 import { ThemeSwitch } from '@modules/core/ui/primitives/theme-switch';
-import { useThemeStore, THEMES } from '@modules/core/ui/theme/app-theme-store';
+import { useThemeStore, Theme } from '@modules/core/theme';
 
-export function AppBar() {
-    const { state, dispatch } = useThemeStore();
-    const isDark = state.theme === THEMES[1].value;
+export const AppBar = observer(function AppBar() {
+    const store = useThemeStore();
+    const isDark = store.theme === Theme.DARK;
 
     return (
         <div className="flex items-center justify-between border-b border-[var(--color-border-default)] bg-[var(--color-surface-raised)] px-4 py-2">
@@ -13,12 +14,9 @@ export function AppBar() {
             <ThemeSwitch
                 checked={isDark}
                 onCheckedChange={(checked) =>
-                    dispatch({
-                        type: 'SWITCH_THEME',
-                        payload: checked ? THEMES[1].value : THEMES[0].value,
-                    })
+                    store.changeTheme(checked ? Theme.DARK : Theme.LIGHT)
                 }
             />
         </div>
     );
-}
+});

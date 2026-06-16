@@ -54,7 +54,8 @@ export function EditPageDialog({ open, onOpenChange, page, onSubmit }: EditPageD
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         placeholder="Paste or type the content you want to read..."
-                        rows={8}
+                        minRows={8}
+                        maxRows={16}
                     />
                 </div>
                 <div className="flex justify-end gap-2 pt-2">

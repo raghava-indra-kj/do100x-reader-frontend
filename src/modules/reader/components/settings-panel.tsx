@@ -1,6 +1,7 @@
+import { observer } from 'mobx-react-lite';
 import { Dialog, BaseDialog } from '@modules/core/ui/primitives/dialog';
 import { ThemeSwitch } from '@modules/core/ui/primitives/theme-switch';
-import { useThemeStore, THEMES } from '@modules/core/ui/theme/app-theme-store';
+import { useThemeStore, Theme } from '@modules/core/theme';
 import { useReaderSettings, SPLIT_LEVELS } from '../store/reader-settings';
 import { FONT_FAMILIES } from '../theme/font-families';
 import { X } from 'lucide-react';
@@ -10,9 +11,9 @@ interface SettingsPanelProps {
     onOpenChange: (open: boolean) => void;
 }
 
-export function SettingsPanel({ open, onOpenChange }: SettingsPanelProps) {
-    const { state: themeState, dispatch: themeDispatch } = useThemeStore();
-    const isDark = themeState.theme === THEMES[1].value;
+export const SettingsPanel = observer(function SettingsPanel({ open, onOpenChange }: SettingsPanelProps) {
+    const store = useThemeStore();
+    const isDark = store.theme === Theme.DARK;
     const { state: settingsState, dispatch: settingsDispatch } = useReaderSettings();
 
     return (
@@ -33,10 +34,7 @@ export function SettingsPanel({ open, onOpenChange }: SettingsPanelProps) {
                     <ThemeSwitch
                         checked={isDark}
                         onCheckedChange={(checked) =>
-                            themeDispatch({
-                                type: 'SWITCH_THEME',
-                                payload: checked ? THEMES[1].value : THEMES[0].value,
-                            })
+                            store.changeTheme(checked ? Theme.DARK : Theme.LIGHT)
                         }
                     />
                 </div>
@@ -79,4 +77,4 @@ export function SettingsPanel({ open, onOpenChange }: SettingsPanelProps) {
             </div>
         </Dialog>
     );
-}
+});

@@ -1,4 +1,4 @@
-import { cn } from '@modules/core/ui/lib/cn';
+import { cn } from '@lib/utils/cn';
 import type { Section } from '../services/section-parser';
 
 interface TocProps {
